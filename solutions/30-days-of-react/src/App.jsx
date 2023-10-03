@@ -1,51 +1,294 @@
 /* eslint-disable react/prop-types */
-import "./App.css"
+import React from "react"
 
-const BoxNumber = ({ number }) => {
-  if (isPrime(number)) {
-    return (
-      <div className="box" style={{ backgroundColor: "red" }}>
-        {number}
-      </div>
-    )
+import asabenehImage from "./assets/asabeneh.jpg"
+
+// Fuction to show month date year
+
+const showDate = (time) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]
+
+  const month = months[time.getMonth()].slice(0, 3)
+  const year = time.getFullYear()
+  const date = time.getDate()
+  return ` ${month} ${date}, ${year}`
+}
+
+// User Card Component
+const UserCard = ({ user: { firstName, lastName, image } }) => (
+  <div className="user-card">
+    <img src={image} alt={firstName} />
+    <h2>
+      {firstName}
+      {lastName}
+    </h2>
+  </div>
+)
+
+// A button component
+const Button = ({ text, onClick, style }) => (
+  <button style={style} onClick={onClick}>
+    {text}
+  </button>
+)
+
+// CSS styles in JavaScript Object
+const buttonStyles = {
+  backgroundColor: "#61dbfb",
+  padding: 10,
+  border: "none",
+  borderRadius: 5,
+  margin: 3,
+  cursor: "pointer",
+  fontSize: 18,
+  color: "white",
+}
+
+// class based component
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+    // the code inside the constructor run before any other code
   }
-  if (number % 2 == 1) {
+  render() {
+    console.log(this.props.data)
+    const {
+      welcome,
+      title,
+      subtitle,
+      author: { firstName, lastName },
+      date,
+    } = this.props.data
+
     return (
-      <div className="box" style={{ backgroundColor: "lightgreen" }}>
-        {number}
-      </div>
-    )
-  } else {
-    return (
-      <div style={{ backgroundColor: "orange" }} className="box">
-        {number}
-      </div>
+      <header style={this.props.style}>
+        <div className="header-wrapper">
+          <h1>{welcome}</h1>
+          <h2>{title}</h2>
+          <h3>{subtitle}</h3>
+          <p>
+            {firstName} {lastName}
+          </p>
+          <small>{showDate(date)}</small>
+        </div>
+      </header>
     )
   }
 }
 
-function isPrime(n) {
-  if (n <= 1) return false
-
-  // Check from 2 to n-1
-  for (let i = 2; i < n; i++) if (n % i == 0) return false
-
-  return true
-}
-
-const App = () => {
-  let numbers = []
-  for (let i = 0; i <= 50; i++) {
-    numbers.push(i)
-  }
-
-  return (
-    <div className="container">
-      {numbers.map((number) => (
-        <BoxNumber key={number} number={number} />
-      ))}
+const Count = ({ count, addOne, minusOne }) => (
+  <div>
+    <h1>{count} </h1>
+    <div>
+      <Button text="+1" onClick={addOne} style={buttonStyles} />
+      <Button text="-1" onClick={minusOne} style={buttonStyles} />
     </div>
-  )
+  </div>
+)
+
+// TechList Component
+// class base component
+class TechList extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const { techs } = this.props
+    const techsFormatted = techs.map((tech) => <li key={tech}>{tech}</li>)
+    return techsFormatted
+  }
+}
+
+// Main Component
+// Class Component
+class Main extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const {
+      techs,
+      user,
+      greetPeople,
+      handleTime,
+      changeBackground,
+      count,
+      addOne,
+      minusOne,
+    } = this.props
+    return (
+      <main>
+        <div className="main-wrapper">
+          <p>Prerequisite to get started react.js:</p>
+          <ul>
+            <TechList techs={techs} />
+          </ul>
+          <UserCard user={user} />
+          <Button text="Greet People" onClick={greetPeople} style={buttonStyles} />
+          <Button text="Show Time" onClick={handleTime} style={buttonStyles} />
+          <Button
+            text="Change Background"
+            onClick={changeBackground}
+            style={buttonStyles}
+          />
+          <Count count={count} addOne={addOne} minusOne={minusOne} />
+        </div>
+      </main>
+    )
+  }
+}
+
+// Footer Component
+// Class component
+class Footer extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <footer style={this.props.style}>
+        <div className="footer-wrapper">
+          <p>Copyright {this.props.date.getFullYear()}</p>
+        </div>
+      </footer>
+    )
+  }
+}
+
+class App extends React.Component {
+  state = {
+    count: 0,
+    styles: {
+      backgroundColor: "",
+      secondBackgroundColor: "#61dbfb",
+      borderColor: "",
+      color: "",
+    },
+  }
+
+  showDate = (time) => {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]
+
+    const month = months[time.getMonth()].slice(0, 3)
+    const year = time.getFullYear()
+    const date = time.getDate()
+    return ` ${month} ${date}, ${year}`
+  }
+  addOne = () => {
+    this.setState({ count: this.state.count + 1 })
+  }
+
+  // method which subtract one to the state
+  minusOne = () => {
+    this.setState({ count: this.state.count - 1 })
+  }
+  handleTime = () => {
+    alert(this.showDate(new Date()))
+  }
+  greetPeople = () => {
+    alert("Welcome to 30 Days Of React Challenge, 2020")
+  }
+  changeBackground = () => {
+    const currentState = this.state.styles
+    const newBackgroundStyle =
+      currentState.backgroundColor === "#21262d" ? "#fff" : "#21262d"
+    const newBackgroundHeaderStyle =
+      currentState.secondBackgroundColor === "#61dbfb" ? "#21262d" : "#61dbfb"
+    const newColor = currentState.color === "#fff" ? "#000" : "#fff"
+    const newBorderColor =
+      currentState.borderColor === "1px solid #fff" ? "" : "1px solid #fff"
+
+    this.setState({
+      styles: {
+        backgroundColor: newBackgroundStyle,
+        color: newColor,
+        secondBackgroundColor: newBackgroundHeaderStyle,
+        borderColor: newBorderColor,
+      },
+    })
+  }
+  render() {
+    const data = {
+      welcome: "Welcome to 30 Days Of React",
+      title: "Getting Started React",
+      subtitle: "JavaScript Library",
+      author: {
+        firstName: "Asabeneh",
+        lastName: "Yetayeh",
+      },
+      date: new Date(),
+    }
+    const techs = ["HTML", "CSS", "JavaScript"]
+    // copying the author from data object to user variable using spread operator
+    const user = { ...data.author, image: asabenehImage }
+
+    return (
+      <div
+        className="app"
+        style={{
+          backgroundColor: this.state.styles.backgroundColor,
+          color: this.state.styles.color,
+        }}>
+        {this.state.backgroundColor}
+        <Header
+          data={data}
+          style={{
+            backgroundColor: this.state.styles.secondBackgroundColor,
+            color: this.state.styles.color,
+            borderBottom: this.state.styles.borderColor,
+          }}
+        />
+        <Main
+          style={{
+            backgroundColor: this.state.styles.backgroundColor,
+            color: this.state.styles.color,
+          }}
+          user={user}
+          techs={techs}
+          handleTime={this.handleTime}
+          greetPeople={this.greetPeople}
+          changeBackground={this.changeBackground}
+          addOne={this.addOne}
+          minusOne={this.minusOne}
+          count={this.state.count}
+        />
+        <Footer
+          style={{
+            backgroundColor: this.state.styles.secondBackgroundColor,
+            color: this.state.styles.color,
+            borderTop: this.state.styles.borderColor,
+          }}
+          date={new Date()}
+        />
+      </div>
+    )
+  }
 }
 
 export default App

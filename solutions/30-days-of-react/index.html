@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500|Roboto:300,400,500&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <title>Vite + React</title>
     <style>
       /* == General style === */
@@ -24,7 +23,6 @@
         font-family: "Montserrat";
         font-weight: 300;
         color: black;
-        background-color: #eaeaea;
       }
 
       .root {
@@ -56,14 +54,45 @@
       }
 
       header {
-        background-color: #61dbfb;
+        /* background-color: #61dbfb; */
+        padding: 25;
         padding: 10px;
+      }
+
+      main {
+        text-align: center;
+      }
+
+      .card {
+        width: max-content;
+        margin: 1em auto;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        padding-bottom: 2.5em;
+      }
+
+      .card img {
+        width: 50%;
+        margin: 0 auto;
+      }
+
+      .card h1 {
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: 500;
       }
 
       main {
         padding: 10px;
         padding-bottom: 60px;
         /* Height of the footer */
+      }
+
+      ul {
+        margin-left: 15px;
       }
 
       ul li {
@@ -84,90 +113,12 @@
         text-align: center;
         line-height: 60px;
       }
-
-      img {
-        width: 400px;
+      .user-card {
+        margin-top: 10px;
       }
-
-      .img img {
-        width: 100%;
-      }
-
-      .form {
-        background-color: lightblue;
-        padding: 2em 4em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        gap: 1em;
-      }
-
-      .form h2,
-      .form p {
-        font-weight: 500;
-      }
-
-      .form .form-input {
-        display: flex;
-        gap: 0.5em;
-      }
-
-      .form-input input {
-        padding: 0.85em 1em;
-        border: none;
-        outline: none;
-        border-radius: 0.4em;
-      }
-
-      .btn {
-        padding: 0.85em 1em;
-        background-color: tomato;
-        border: none;
-        outline: none;
-        border-radius: 0.4em;
-        color: white;
-        cursor: pointer;
-        width: 20%;
-        transition: all 200ms ease;
-      }
-
-      .btn:hover {
-        opacity: 0.8;
-      }
-
-      .card {
-        padding: 2em;
-        background-color: white;
-        width: 95%;
-        margin: 0.5em auto;
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-      }
-
-      .card img {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
+      .user-card > img {
         border-radius: 50%;
-      }
-
-      .card h2,
-      .card p {
-        font-weight: 500;
-      }
-
-      .card ul {
-        display: flex;
-        gap: 0.5em;
-      }
-
-      .card ul li {
-        background-color: #61dbfb;
-        color: white;
-        padding: 0.2em 0.45em;
-        border-radius: 0.5em;
+        width: 14%;
       }
     </style>
   </head>
